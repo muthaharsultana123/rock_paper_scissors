@@ -1,57 +1,75 @@
-const computerdisplay = document.getElementById('computerside')
-const userdisplay = document.getElementById('userside')
-const resultdisplay = document.getElementById('result')
+const computerDisplay = document.getElementById('computerside')
+const userDisplay = document.getElementById('userside')
+const resultDisplay = document.getElementById('result')
 const operations = document.querySelectorAll('button')
+const resetButton = document.getElementById('resetCount')
+const count = document.getElementById('userCounts')
 
-let userchoice
-let computerchoice
+let userChoice
+let computerChoice
 let result
+let userCount=0;
+let computerCount=0;
 
-operations.forEach(operation => operation.addEventListener('click' ,(e) => {
-    userchoice = e.target.id
-    userdisplay.innerHTML = userchoice
-    generatecomputerchoice()
-    getresult()
-   
-}))
+resetButton.addEventListener('click', (e) =>{
+    resetCount()
+})
+
+function resetCount(){
+    console.log("helllo")
+    userCount=0;
+    computerCount=0;
+}
 
 function generatecomputerchoice() {
-     choice = math.floor(math.random()*3) + 1
+    choice = Math.floor(Math.random()*3) + 1
     if (choice == 1){
-        computerchoice = "rock"
+        computerChoice = "rock"
     }
     if (choice == 2){
-        computerchoice = "paper"
+        computerChoice = "paper"
     }
     if (choice == 3){
-        computerchoice = 'scissors'
+        computerChoice = 'scissors'
     }
-    computerdisplay.innerHTML = computerchoice
+    computerDisplay.innerHTML = computerChoice
 }
 
 function getresult() {
-    if (computerchoice === userchoice) {
+    if (computerChoice === userChoice) {
         result = 'its a draw!'
     }
-    if (computerchoice === 'rock' && userchoice === "paper") {
+    if (computerChoice === 'rock' && userChoice === "paper") {
         result = 'you win!'
+        userCount += 1
     }
-    if (computerchoice === 'rock' && userchoice === "scissors") {
+    if (computerChoice === 'rock' && userChoice === "scissors") {
         result = 'you lost!'
+        computerCount +=1
     }
-    if (computerchoice === 'paper' && userchoice === "scissors") {
+    if (computerChoice === 'paper' && userChoice === "scissors") {
         result = 'you win!'
+        userCount += 1
     }
-    if (computerchoice === 'paper' && userchoice === "rock") {
+    if (computerChoice === 'paper' && userChoice === "rock") {
         result = 'you lose!'
+        computerCount +=1
     }
-    if (computerchoice === 'scissors' && userchoice === "rock") {
+    if (computerChoice === 'scissors' && userChoice === "rock") {
         result = 'you win!'
+        userCount += 1
     }
-    if (computerchoice === 'scissors' && userchoice === "paper") {
+    if (computerChoice === 'scissors' && userChoice === "paper") {
         result = 'you lose!'
+        computerCount +=1 
     }
-    resultdisplay .innerHTML = result
+    resultDisplay .innerHTML = result
 }
 
-
+operations.forEach(operation => operation.addEventListener('click' ,(e) => {
+    userChoice = e.target.id
+    userDisplay.innerHTML = userChoice
+    generatecomputerchoice()
+    getresult() 
+    count.textContent = `${userCount} - ${computerCount}`
+}))
